@@ -4,6 +4,7 @@ const Employer = require('../models/Employer');
 const { ticketValidation, departmentValidation } = require('../validation/validation');
 const Department = require('../models/Department');
 
+
 //Department
 exports.addDepartment = async (req, res) => {
     const { error } = departmentValidation(req.body);
@@ -33,19 +34,7 @@ exports.getDepartment = async (req, res) => {
     }
 }
 
-//Technician
-
-exports.getTechnician = async (req, res) => {
-    try {
-        const technician = await Employer.find({ type: 'technician' }).select('-password');
-        if (technician) return res.status(200).json(technician)
-
-    } catch (error) {
-        throw Error(error)
-    }
-}
-
-//Ticket
+//Ticket Employer
 
 exports.addTicket = async (req, res) => {
     const { error } = ticketValidation(req.body);
@@ -61,6 +50,21 @@ exports.addTicket = async (req, res) => {
         throw Error(error)
     }
 }
+ 
+exports.getEmployedTicket = async (req, res) => {
+    try {
+        const ticket = await Ticket.find({ id_employer: res.auth._id });
+        if (ticket.length > 0) {
+            return res.status(200).json(ticket)
+        } else {
+            return res.status(404).json('There is no ticket')
+        }
+    } catch (error) {
+        throw Error(error)
+    }
+}
+
+// Ticket Admin 
 
 exports.getTicket = async (req, res) => {
     try {
@@ -84,20 +88,6 @@ exports.getTicketById = async (req, res) => {
     }
 }
 
-// Ticket employer 
-
-exports.getEmployedTicket = async (req, res) => {
-    try {
-        const ticket = await Ticket.find({ id_employer: res.auth._id });
-        if (ticket.length > 0) {
-            return res.status(200).json(ticket)
-        } else {
-            return res.status(404).json('There is no ticket')
-        }
-    } catch (error) {
-        throw Error(error)
-    }
-}
 
 //Ticket assign Admin
 
@@ -144,6 +134,17 @@ exports.assignTicket = async (req, res) => {
 }
 
 // Ticket assign Technician
+
+exports.getTechnician = async (req, res) => {
+    try {
+        const technician = await Employer.find({ type: 'technician' }).select('-password');
+        if (technician) return res.status(200).json(technician)
+
+    } catch (error) {
+        throw Error(error)
+    }
+}
+
 exports.getAssignedTicket = async (req, res) => {
     try {
         const ticket = await Assign.find({ id_technician: res.auth._id }).populate('id_ticket').select('').limit(1);
@@ -172,7 +173,6 @@ exports.cancelTicket = async (req, res) => {
         throw Error(error)
     }
 }
-
 
 exports.resolvedTicket = async (req, res) => {
     try {
