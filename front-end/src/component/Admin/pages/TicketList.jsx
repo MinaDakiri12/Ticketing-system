@@ -34,7 +34,6 @@ function GetTicket() {
                 <thead>
             <tr>
               <th scope="col">Date</th>
-              <th scope="col">Name of Employer</th>
               <th scope="col">Title</th>
               <th scope="col">Type</th>
               <th scope="col">Emergency</th>
@@ -45,8 +44,7 @@ function GetTicket() {
                 <tbody>
               {getTicket.map((Data)=>(
                     <tr >
-                    <td>{Data.date}</td>
-                      <td>{Data.id_employer.full_name}</td>
+                      <td>{Data.date}</td>
                       <td>{Data.title}</td>
                       <td>{Data.type}</td>
                       <td>{Data.emergency}</td>
