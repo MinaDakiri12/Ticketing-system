@@ -64,6 +64,12 @@ exports.getEmployedTicket = async (req, res) => {
     }
 }
 
+exports.deleteTicket= (req,res)=>{
+    Ticket.findByIdAndDelete(req.params.id)
+    .then(ticket => res.json('Ticket deleted.'))
+    .catch(err => res.status(400).json('Error: ' + err));
+}
+
 // Ticket Admin 
 
 exports.getTicket = async (req, res) => {
@@ -91,50 +97,6 @@ exports.getTicketById = async (req, res) => {
 
 //Ticket assign Admin
 
-exports.assignTicket = async (req, res) => {
-    try {
-        const { id_technician, id_ticket } = req.body;
-        console.log('req body', req.body)
-        const technician = await Employer.findOne({  _id: id_technician })
-        const findTicket = await Assign.findOne({ _id: id_ticket }).populate('id_ticket');
-        console.log('find ticket', findTicket)
-
-        if (findTicket === null) {
-            const assign = new Assign({
-                id_ticket: id_ticket,
-                id_technician: technician._id
-            })
-            const updated = await Ticket.findByIdAndUpdate({ _id: id_ticket }, { etat: 'assigned' });
-            const assigned = await assign.save()
-            if (assigned && updated) return res.status(201).json(assign)
-        } else {
-            if (findTicket.id_ticket._id == id_ticket &&
-                findTicket.id_technician == (technician._id).toString() &&
-                (findTicket.id_ticket.etat == 'assigned' || findTicket.id_ticket.etat == 're-assigned')) {
-                return res.status(400).json(`ticket already assigned to ${technician. id_technician }`)
-            }
-            const assign = new Assign({
-                id_ticket : id_ticket,
-                id_technician: technician._id
-            })
-            if (findTicket.id_ticket.etat == 'waiting') {
-                await Ticket.findByIdAndUpdate({ _id: id_ticket }, { etat: 'assigned' });
-
-            }
-            if (findTicket.id_ticket.etat == 're-waiting') {
-                await Ticket.findByIdAndUpdate({ _id: id_ticket }, { etat: 're-assigned' });
-            }
-            const assigned = await assign.save()
-            if (assigned) return res.status(201).json(assign)
-        }
-    } catch (error) {
-        throw Error(error)
-    }
-
-}
-
-// Ticket assign Technician
-
 exports.getTechnician = async (req, res) => {
     try {
         const technician = await Employer.find({ type: 'technician' }).select('-password');
@@ -145,9 +107,68 @@ exports.getTechnician = async (req, res) => {
     }
 }
 
+exports.assignTicket = async (req, res) => {
+    try {
+        const { id_technician} = req.body;
+        console.log('req body', req.body)
+        const technician = await Employer.findOne({  _id: id_technician })
+        const findTicket = await Assign.findOne({id_ticket: req.params.id}).populate('id_ticket');
+        console.log('find ticket', findTicket)
+
+        if (findTicket === null) {
+            const assign = new Assign({
+                id_ticket: req.params.id,
+                id_technician: technician._id
+            })
+            const updated = await Ticket.findByIdAndUpdate({ _id: req.params.id }, { etat: 'assigned' });
+            const assigned = await assign.save()
+            if (assigned && updated) return res.status(201).json(assign)
+        } else {
+            if (findTicket.id_ticket._id == req.params.id
+                &&findTicket.id_technician == (technician._id).toString() &&
+                (findTicket.id_ticket.etat == 'assigned' || findTicket.id_ticket.etat == 're-assigned')) {
+                return res.status(400).json(`ticket already assigned to ${technician. id_technician }`)
+            }
+            const assign = new Assign({
+                id_ticket : req.params.id,
+                id_technician: technician._id
+            })
+            if (findTicket.id_ticket.etat == 'waiting') {
+                await Ticket.findByIdAndUpdate({ _id: req.params.id}, { etat: 'assigned' });
+
+            }
+            if (findTicket.id_ticket.etat == 're-waiting') {
+                await Ticket.findByIdAndUpdate({ _id: req.params.id}, { etat: 're-assigned' });
+            }
+            const assigned = await assign.save()
+            if (assigned) return res.status(201).json(assign)
+        }
+    } catch (error) {
+        throw Error(error)
+    }
+
+}
+
+exports.acceptTicket = (req, res) => {
+    Ticket.find({etat: 'resolved'}).populate('id_employer').then(data => {
+         return res.json(data)
+    })
+} 
+
+exports.refuseTicket = async(req, res) => {
+    try {
+        const refuse = await Ticket.findByIdAndUpdate({_id : req.params.id}, {etat : 're-waiting'})
+        res.status(200).json({message : 'Ticket refuse !'})
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
+
+// Ticket assign Technician
+
 exports.getAssignedTicket = async (req, res) => {
     try {
-        const ticket = await Assign.find({ id_technician: res.auth._id }).populate('id_ticket').select('').limit(1);
+        const ticket = await Assign.find({ id_technician: res.auth._id }).populate('id_ticket');
         if (ticket.length > 0) {
             return res.status(200).json(ticket)
         } else {
