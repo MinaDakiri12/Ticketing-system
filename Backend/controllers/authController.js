@@ -23,7 +23,7 @@ exports.signup = async (req, res) => {
     employer.password = hashPassword;
     try {
         const saved = await employer.save();
-        if (saved) return res.status(201).json(`${employer.type} created succefully`);
+        if (saved) return res.status(201).json(`${employer.type} created successfully`);
     } catch (error) {
         return res.status(500).json('Error server!')
     }
@@ -40,7 +40,7 @@ exports.signin = async (req, res) => {
         const match = await bcrypt.compare(password, checkUser.password);
         if (!match) return res.status(400).json({ err: 'Invalid email or password' });
         const token = jwt.sign({ id: checkUser._id, type: checkUser.type }, process.env.JWT_SECRET, { expiresIn: 600000000, });
-        return res.status(200).cookie('auth_token', token, { maxAge: 600000000, httpOnly: true }).json({ type: checkUser.type, isAuthenticated: true });
+        return res.status(200).cookie('auth_token', token, { maxAge: 600000000, httpOnly: true }).json({ type: checkUser.type, isAuth: true });
     } catch (err) {
         res.status(400).json({ error: 'bad request' });
     }
