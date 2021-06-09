@@ -18,6 +18,7 @@ function RefusedTicket() {
 
 useEffect(()=>{
     GetAllTicket () 
+     // eslint-disable-next-line react-hooks/exhaustive-deps
 },[])
 
     
