@@ -107,6 +107,15 @@ exports.getTechnician = async (req, res) => {
     }
 }
 
+exports.getAllUser = async (req, res) => {
+    try {
+       const allUser = await Employer.find().populate('id_department', 'full_name')
+       res.status(200).json(allUser) 
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
+
 exports.assignTicket = async (req, res) => {
     try {
         const { id_technician} = req.body;
