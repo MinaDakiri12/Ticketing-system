@@ -7,7 +7,7 @@ exports.registerValidation = data=>{
     email: Joi.string().email().required(),
     type: Joi.string(),
     password: Joi.string().min(6).required(),
-    department: Joi.string()
+    id_department: Joi.string()
 })
     return schema.validate(data)
 }
@@ -24,7 +24,7 @@ exports.loginValidation = data=>{
 exports.ticketValidation = data=>{
 
     const schema = Joi.object({
-    titre: Joi.string().min(6).max(100).required(),
+    title: Joi.string().min(6).max(100).required(),
     type: Joi.string().min(4).max(100).required(),
     emergency: Joi.string(),
     description: Joi.string().min(10).max(1024).required(),
