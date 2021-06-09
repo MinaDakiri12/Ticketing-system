@@ -18,7 +18,6 @@ import Assigned from '../component/Admin/pages/Assigned'
 import Refused  from '../component/Admin/pages/Refused'
 import Closed from '../component/Admin/pages/Closed'
 import TicketList from '../component/Admin/pages/TicketList'
-import Users from  '../component/Admin/pages/Users'
 import Register from '../component/Admin/pages/Register'
 
 
@@ -57,9 +56,7 @@ function Routes() {
                     <Route path='/closed' exact component={Closed}/>
                     <Route path='/refused' exact component={Refused}/>
                     <Route path='/register' exact component={Register}/>
-                    
-
-                  
+                 
                </Switch>
           </Router>
           </>
