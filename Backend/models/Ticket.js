@@ -9,7 +9,7 @@ if (day < 10) day = `0${day}`;
 const dt = `${d.getFullYear()}-${month}-${day}`;  
 
 const ticketSchema = Schema({
-    titre: {type: String, min:6, max: 100, require: true},
+    title: {type: String, min:6, max: 100, require: true},
     type: {type: String, min:4, max: 100, require: true},
     emergency: {type: String, ennum: ['normal', 'medium', 'urgent'], default: 'normal'},
     description: {type: String, min:10, max: 1024, require: true},
