@@ -14,7 +14,7 @@ exports.verificationToken = (role) => (req, res, next) => {
             }
         })
     }else{
-        return res.status(400).json({type: null, isAuthenticated: false })
+        return res.status(400).json({type: null, isAuth: false })
     }
 }
 
@@ -25,16 +25,16 @@ exports.isAuth = (req, res) => {
         jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
             if (err) {
                 console.log('error')
-                return res.clearCookie('auth_token').json({ type: null, isAuthenticated: false });
+                return res.clearCookie('auth_token').json({ type: null, isAuth: false });
             } else {
                 return res
                     .status(200)
-                    .json({ type: decodedToken.type, isAuthenticated: true });
+                    .json({ type: decodedToken.type, isAuth: true });
             }
         });
 
     } else {
         console.log('notToken')
-        return res.json({ role: null, isAuthenticated: false });
+        return res.json({ role: null, isAuth: false });
     }
 }
