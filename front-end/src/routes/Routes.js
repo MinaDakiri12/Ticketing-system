@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-
+import {UserContext} from '../component/UserContextApi'
 import Login from '../form/Login'
 import Logout from '../form/Logout'
 import Home from '../core/Home'
@@ -10,7 +10,7 @@ import Home from '../core/Home'
 import Employer from '../component/Employer/Employer'
 import CreatTickets from '../component/Employer/CreatTickets'
 
-
+//Context Api
 
 // Admin
 import Admin from '../component/Admin/Admin'
@@ -20,14 +20,21 @@ import Closed from '../component/Admin/pages/Closed'
 import TicketList from '../component/Admin/pages/TicketList'
 import Register from '../component/Admin/pages/Register'
 
+//Protected
+
+import ProtectedAdmin from './ProtectedAdmin'
+import ProtectedAuth from './ProtectedAuth'
+import ProtectedEmployer from './ProtectedEmployer'
+import ProtectTech from './ProtectedTech'
 
 
 // Tech
- 
 import Tech from '../component/Technician/Tech'
 
 
 function Routes() {
+
+     const { auth:{isAuth , type}} = useContext(UserContext)
      
  
 
@@ -36,27 +43,28 @@ function Routes() {
           <>
           <Router>
                <Switch>
+                
                  
                     {/* Global Routes */}
                     <Route exact path="/" component={Home}/>
                     <Route exact path="/logout" component={Logout}/>
-                    <Route exact path="/login" component={Login}/>
+                    <ProtectedAuth exact path="/login" component={Login}/>
 
 
-                    <Route path='/tech' exact component={Tech}/> 
+                    <ProtectTech path='/tech' exact component={Tech}/> 
 
                     {/*Routes Employer */}
-                    <Route path='/employer' exact component={Employer}/> 
-                    <Route path='/create-tickets' exact component={CreatTickets}/>
+                    <ProtectedEmployer path='/employer' exact component={Employer}/> 
+                    <ProtectedEmployer path='/create-tickets' exact component={CreatTickets}/>
 
                     {/*Routes Admin */}
-                    <Route path='/admin' exact component={Admin}/> 
-                    <Route path='/tickets-list' exact component={TicketList}/>
-                    <Route path='/assign=:id' exact component={Assigned}/>
-                    <Route path='/closed' exact component={Closed}/>
-                    <Route path='/refused' exact component={Refused}/>
-                    <Route path='/register' exact component={Register}/>
-                 
+                    <ProtectedAdmin path='/admin' exact isAuth={isAuth} type={type} component={Admin}/> 
+                    <ProtectedAdmin path='/tickets-list' exact component={TicketList}/>
+                    <ProtectedAdmin path='/assign=:id' exact component={Assigned}/>
+                    <ProtectedAdmin path='/closed' exact component={Closed}/>
+                    <ProtectedAdmin path='/refused' exact component={Refused}/>
+                    <ProtectedAdmin path='/register' exact component={Register}/>
+
                </Switch>
           </Router>
           </>
