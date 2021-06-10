@@ -1,11 +1,12 @@
-import React from 'react'
-
+import React, {useContext} from 'react'
+import {UserContext} from '../component/UserContextApi'
 import Layout from './../core/Layout'
 import axios from 'axios'
 
 axios.defaults.withCredentials = true
 
 function Login(props) {
+  const { setAuth} = useContext(UserContext);
   
   
 
@@ -28,10 +29,7 @@ function Login(props) {
         withCredentials:true
       })
       if(res){
-     
-        if(res.data.isAuth && res.data.type === 'admin') props.history.push('/admin')
-        if(res.data.isAuth && res.data.type === 'employer') props.history.push('/employer')
-        if(res.data.isAuth && res.data.type=== 'technician') props.history.push('/tech')
+        setAuth(res.data)
       }
     }
     catch (error) {
