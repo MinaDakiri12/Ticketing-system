@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import Layout from '../../core/Layout'
 import axios from 'axios'
 
-function CreateTicket() {
+function CreateTicket(props) {
 
      const [createTicket, setCreateTicket] = useState({
           title: '',
@@ -17,6 +16,7 @@ function CreateTicket() {
          await axios.post(' http://localhost:3001/api/addTicket', createTicket)
           .then((response)=>{
                console.log(response+'Data Inserted!')
+               props.history.push('/employer')
           })
           .catch((error) => {console.log(error)})
      }
@@ -30,11 +30,8 @@ function CreateTicket() {
 
     
      const form = () =>(
-       <form onSubmit={createTickets}>
-           
-           <button className='btn btn-primary btn-lg'><Link to="/employer" className="btn "> Back to page Employer</Link> </button>
-             
-        
+        <form onSubmit={createTickets}>
+       
           <div className="form-group">
                                    <label htmlFor="registration_number">Title</label>
                                    <input type="text" className="form-control" name="title" onChange={handelChange} />
