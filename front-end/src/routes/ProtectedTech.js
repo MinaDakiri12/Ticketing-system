@@ -1,8 +1,10 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { Route, Redirect } from 'react-router-dom'
+import {UserContext} from '../component/UserContextApi'
 
 
-const ProtectedTech = ({ isAuth, type, component: Component, ...rest }) => {
+const ProtectedTech = ({comp: Component, ...rest }) => {
+     const { auth:{isAuth , type}} = useContext(UserContext);
      return (
           <Route
                {...rest}
