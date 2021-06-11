@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import Layout from '../../core/Layout'
 import axios from 'axios'
-
+import toastr from 'toastr';
+import 'toastr/build/toastr.css';
 function CreateTicket(props) {
 
      const [createTicket, setCreateTicket] = useState({
@@ -15,10 +16,11 @@ function CreateTicket(props) {
           e.preventDefault();
          await axios.post(' http://localhost:3001/api/addTicket', createTicket)
           .then((response)=>{
-               console.log(response+'Data Inserted!')
+               
+               toastr.info ('Ticket Created Successfully')
                props.history.push('/employer')
           })
-          .catch((error) => {console.log(error)})
+          .catch((error) => { toastr.warning(error , 'Server Error ')})
      }
 
 
