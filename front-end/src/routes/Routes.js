@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import {UserContext} from '../component/UserContextApi'
+
 import Login from '../form/Login'
 import Logout from '../form/Logout'
 import Home from '../core/Home'
@@ -23,7 +23,6 @@ import Register from '../component/Admin/pages/Register'
 //Protected
 
 import ProtectedAdmin from './ProtectedAdmin'
-import ProtectedAuth from './ProtectedAuth'
 import ProtectedEmployer from './ProtectedEmployer'
 import ProtectTech from './ProtectedTech'
 
@@ -32,13 +31,7 @@ import ProtectTech from './ProtectedTech'
 import Tech from '../component/Technician/Tech'
 
 
-function Routes() {
-
-     const { auth:{isAuth , type}} = useContext(UserContext)
-     
- 
-
-     
+function Routes() {     
      return (
           <>
           <Router>
@@ -48,22 +41,22 @@ function Routes() {
                     {/* Global Routes */}
                     <Route exact path="/" component={Home}/>
                     <Route exact path="/logout" component={Logout}/>
-                    <ProtectedAuth exact path="/login" component={Login}/>
+                    <Route exact path="/login" component={Login}/>
 
 
-                    <ProtectTech path='/tech' exact component={Tech}/> 
+                    <ProtectTech path='/tech' exact comp={Tech}/> 
 
                     {/*Routes Employer */}
-                    <ProtectedEmployer path='/employer' exact component={Employer}/> 
-                    <ProtectedEmployer path='/create-tickets' exact component={CreatTickets}/>
+                    <ProtectedEmployer path='/employer' exact comp={Employer}/> 
+                    <ProtectedEmployer path='/create-tickets' exact comp={CreatTickets}/>
 
                     {/*Routes Admin */}
-                    <ProtectedAdmin path='/admin' exact isAuth={isAuth} type={type} component={Admin}/> 
-                    <ProtectedAdmin path='/tickets-list' exact component={TicketList}/>
-                    <ProtectedAdmin path='/assign=:id' exact component={Assigned}/>
-                    <ProtectedAdmin path='/closed' exact component={Closed}/>
-                    <ProtectedAdmin path='/refused' exact component={Refused}/>
-                    <ProtectedAdmin path='/register' exact component={Register}/>
+                    <ProtectedAdmin path='/admin' exact  comp={Admin}/> 
+                    <ProtectedAdmin path='/tickets-list' exact comp={TicketList}/>
+                    <ProtectedAdmin path='/assign=:id' exact comp={Assigned}/>
+                    <ProtectedAdmin path='/closed' exact comp={Closed}/>
+                    <ProtectedAdmin path='/refused' exact comp={Refused}/>
+                    <ProtectedAdmin path='/register' exact comp={Register}/>
 
                </Switch>
           </Router>
