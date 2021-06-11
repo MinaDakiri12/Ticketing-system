@@ -2,6 +2,8 @@ import React, {useContext} from 'react'
 import {UserContext} from '../component/UserContextApi'
 import Layout from './../core/Layout'
 import axios from 'axios'
+import toastr from 'toastr';
+import 'toastr/build/toastr.css';
 
 axios.defaults.withCredentials = true
 
@@ -21,6 +23,8 @@ function Login(props) {
     setDataLogin({...dataLogin,[e.target.name] : e.target.value})
   }
   const handelSubmit = async (e)=>{
+    //const jwt = localStorage.getItem('jwt_info');
+  
     
     e.preventDefault();
     try {
@@ -29,10 +33,27 @@ function Login(props) {
         withCredentials:true
       })
       if(res){
+        toastr.success (' authenticated Successfully', 'Welcome')
         setAuth(res.data)
+       
+        if(res.data.isAuth){
+          localStorage.setItem('jwt_info', JSON.stringify(res.data))
+
+          if (res.data.type === 'admin'){
+            
+            props.history.push('/admin')
+
+          }else if (res.data.type === 'technician'){
+            props.history.push('/tech')
+          }else if (res.data.type === 'employer'){
+            props.history.push('/employer')
+          }
+        }
+        
       }
     }
     catch (error) {
+      toastr.warning(error , 'Server Error ')
       if(error) console.log(error.response);
     }
 
