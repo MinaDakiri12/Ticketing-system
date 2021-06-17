@@ -2,7 +2,6 @@ import React, {useState, useEffect} from "react"
 import axios from 'axios'
 import { useParams,useHistory } from 'react-router-dom'
 import toastr from 'toastr';
-import 'toastr/build/toastr.css';
 import NavAdmin from './NavAdmin'
 import Layout from '../../../core/Layout'
 

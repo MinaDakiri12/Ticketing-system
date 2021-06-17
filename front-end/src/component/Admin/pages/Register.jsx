@@ -3,7 +3,6 @@ import {useHistory} from 'react-router-dom'
 import NavAdmin from './NavAdmin'
 import Layout from '../../../core/Layout'
 import toastr from 'toastr';
-import 'toastr/build/toastr.css';
 import axios from 'axios'
 axios.defaults.withCredentials = true
 

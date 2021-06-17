@@ -3,7 +3,7 @@ import {useHistory} from 'react-router-dom'
 import Layout from '../../core/Layout'
 import axios from 'axios'
 import toastr from 'toastr';
-import 'toastr/build/toastr.css';
+
 function CreateTicket() {
      const history = useHistory()
      const [createTicket, setCreateTicket] = useState({

@@ -1,8 +1,6 @@
-
 import React, {useState, useEffect} from "react"
 import axios from 'axios'
 import toastr from 'toastr';
-import 'toastr/build/toastr.css';
 import Layout from '../../core/Layout'
 import NavTech from './Navtech'
 
