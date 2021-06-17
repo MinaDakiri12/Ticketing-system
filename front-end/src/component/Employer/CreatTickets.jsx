@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
+import {useHistory} from 'react-router-dom'
 import Layout from '../../core/Layout'
 import axios from 'axios'
 import toastr from 'toastr';
 import 'toastr/build/toastr.css';
-function CreateTicket(props) {
-
+function CreateTicket() {
+     const history = useHistory()
      const [createTicket, setCreateTicket] = useState({
           title: '',
           description: '',
@@ -14,13 +15,16 @@ function CreateTicket(props) {
 
      const createTickets = async(e) => {
           e.preventDefault();
-         await axios.post(' http://localhost:3001/api/addTicket', createTicket)
-          .then((response)=>{
-               
-               toastr.info ('Ticket Created Successfully')
-               props.history.push('/employer')
-          })
-          .catch((error) => { toastr.warning(error , 'Server Error ')})
+          try {
+          const {data} = await axios.post(' http://localhost:3001/api/addTicket', createTicket)
+          if(data){
+               toastr.success ('Ticket Created Successfully')
+               history.push('/employer')
+          }
+          } catch (error) {
+               console.log(error)
+          }
+
      }
 
 
