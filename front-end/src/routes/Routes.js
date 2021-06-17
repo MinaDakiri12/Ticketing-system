@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
 import Login from '../form/Login'
@@ -15,7 +15,6 @@ import CreatTickets from '../component/Employer/CreatTickets'
 // Admin
 import Admin from '../component/Admin/Admin'
 import Assigned from '../component/Admin/pages/Assigned'
-import Refused  from '../component/Admin/pages/Refused'
 import Closed from '../component/Admin/pages/Closed'
 import TicketList from '../component/Admin/pages/TicketList'
 import Register from '../component/Admin/pages/Register'
@@ -55,7 +54,6 @@ function Routes() {
                     <ProtectedAdmin path='/tickets-list' exact comp={TicketList}/>
                     <ProtectedAdmin path='/assign=:id' exact comp={Assigned}/>
                     <ProtectedAdmin path='/closed' exact comp={Closed}/>
-                    <ProtectedAdmin path='/refused' exact comp={Refused}/>
                     <ProtectedAdmin path='/register' exact comp={Register}/>
 
                </Switch>
