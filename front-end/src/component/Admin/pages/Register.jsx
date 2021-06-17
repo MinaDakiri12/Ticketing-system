@@ -1,12 +1,15 @@
 import React, { useState, useEffect} from 'react'
+import {useHistory} from 'react-router-dom'
 import NavAdmin from './NavAdmin'
 import Layout from '../../../core/Layout'
+import toastr from 'toastr';
+import 'toastr/build/toastr.css';
 import axios from 'axios'
 axios.defaults.withCredentials = true
 
 const Register = (props) => {
   
-
+    const history = useHistory()
     const initialState = { full_name:'', email:'', password:'', type: 'employer', id_department: ''}
     const [infosUser, setInfosUser] = useState(initialState)
     const [department, setDepartment] = useState([])
@@ -29,16 +32,15 @@ const Register = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
-        const data = await axios.post(' http://localhost:3001/api/signup', infosUser,
-        { withCredentials: true })
-       
-        if(data){
-            console.log(data, "register");
-           
-            props.history.push('/login')
-
-        }
+        try {
+            const {data} = await axios.post('http://localhost:3001/api/signup', infosUser)
+            if(data){
+                 toastr.success ('Employer Created Successfully')
+                 history.push('/admin')
+            }
+            } catch (error) {
+                 console.log(error)
+            }
     }
 
     
