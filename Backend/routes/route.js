@@ -22,7 +22,6 @@ router.get('/technicianTicket', verificationToken('technician'), getAssignedTick
 //admin 
 router.post('/signup',verificationToken('admin'), signup);
 router.post('/addDepartment', verificationToken('admin'), addDepartment);
-router.post('/addDepartment', verificationToken('admin'), addDepartment);
 router.post('/assign/:id', verificationToken('admin'), assignTicket);
 router.get('/department', verificationToken('admin'), getDepartment);
 router.get('/technician', verificationToken('admin'), getTechnician);
