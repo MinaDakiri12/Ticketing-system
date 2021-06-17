@@ -23,7 +23,7 @@ function Login(props) {
     setDataLogin({...dataLogin,[e.target.name] : e.target.value})
   }
   const handelSubmit = async (e)=>{
-    //const jwt = localStorage.getItem('jwt_info');
+    
   
     
     e.preventDefault();
@@ -33,7 +33,7 @@ function Login(props) {
         withCredentials:true
       })
       if(res){
-        toastr.success (' authenticated Successfully', 'Welcome')
+        toastr.success(' authenticated Successfully', 'Welcome')
         setAuth(res.data)
        
         if(res.data.isAuth){
