@@ -1,6 +1,8 @@
 
 import React, {useState, useEffect} from "react"
 import axios from 'axios'
+import toastr from 'toastr';
+import 'toastr/build/toastr.css';
 import Layout from '../../core/Layout'
 import NavTech from './Navtech'
 
@@ -19,6 +21,7 @@ function TicketTech() {
      const resolvedTicket = (id) => {
         
           axios.post(`http://localhost:3001/api/resolvedTicket/${id}`).then(response => {
+               toastr.info ('Ticket Resolved')
                console.log(response)
           })
      }
@@ -27,6 +30,7 @@ function TicketTech() {
                   axios.post(`http://localhost:3001/api/cancelTicket/${id}`)
                   .then((response) => {
                        console.log(response)
+                       toastr.error ('Ticket Cancel')
                  
                   })
                   .catch((error) => {
