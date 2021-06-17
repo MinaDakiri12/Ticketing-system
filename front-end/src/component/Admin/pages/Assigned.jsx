@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react"
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { useParams,useHistory } from 'react-router-dom'
 import toastr from 'toastr';
 import 'toastr/build/toastr.css';
 import NavAdmin from './NavAdmin'
@@ -9,6 +9,8 @@ import Layout from '../../../core/Layout'
 
 
 function Single(props) {
+    
+    const history = useHistory()
      const { id } = useParams()
      const [ticket, setTicket] = useState([])
      const [technician, setTechList] = useState([])
@@ -38,16 +40,22 @@ function Single(props) {
      // Assign submit
      const assigns =  async (e) => {
           e.preventDefault()
-         await axios.post(`http://localhost:3001/api/assign/${id}`, {
+          try{
+                const{data}=  await axios.post(`http://localhost:3001/api/assign/${id}`, {
 
-            id_technician:  id_technician
+                    id_technician:  id_technician
 
-          })
-          .then((response)=>{   
-            toastr.info ('Assigned Successfully')
-            props.history.push('/ticket-list')
-         })
-         .catch((error) => { toastr.warning(error , 'Server Error ')})
+                })
+                if(data){
+                    toastr.success ('Assigned Successfully')
+                    history.push('/tickets-list')}
+            }
+    
+          catch (error) {
+                    console.log(error)
+         }
+
+         
      }
 
 
