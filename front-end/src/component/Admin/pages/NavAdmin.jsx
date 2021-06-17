@@ -18,9 +18,6 @@ const NavAdmin = (props) =>{
                   <Link  className="nav-link" to="/register">Register <span className="sr-only">(current)</span></Link >
                 </li>
                 <li className="nav-item active">
-                  <Link  className="nav-link" to="/refused">Refused Tickets <span className="sr-only">(current)</span></Link >
-                </li>
-                <li className="nav-item active">
                   <Link  className="nav-link" to="/closed">Closed Tickets <span className="sr-only">(current)</span></Link >
                 </li>
                 <li className="nav-item active">
