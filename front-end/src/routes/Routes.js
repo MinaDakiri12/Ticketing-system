@@ -10,7 +10,7 @@ import Home from '../core/Home'
 import Employer from '../component/Employer/Employer'
 import CreatTickets from '../component/Employer/CreatTickets'
 
-//Context Api
+
 
 // Admin
 import Admin from '../component/Admin/Admin'
