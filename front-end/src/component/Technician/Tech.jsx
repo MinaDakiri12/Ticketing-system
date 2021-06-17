@@ -67,6 +67,7 @@ function TicketTech() {
                                         <td>{Data.id_ticket.title}</td>
                                         <td>{Data.id_ticket.emergency}</td>
                                         <td>{Data.id_ticket.etat}</td>
+                                        <td>{Data.id_ticket.description}</td>
                                         <td>{Data.id_ticket.type}</td>
                                         
                                        
